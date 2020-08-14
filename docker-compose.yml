@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+    dockerautolabel:
+        build: .
+        image: registry.shayoh.duckdns.org:5000/dockerautolabel:3
+        volumes:
+           - /data/gdata/docker/config/dockerautolabel:/config
+           - /var/run/docker.sock:/var/run/docker.sock  
+        networks:
+           - proxy-net     
+        deploy:
+            placement:
+               constraints:        
+                  - node.role==manager
+
+networks:
+    proxy-net:
+          external: true       
