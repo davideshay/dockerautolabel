@@ -1,6 +1,12 @@
 # dockerautolabel
 Docker Auto Labelling tool for swarm engine clusters
 
+## Docker/Github Build Status
+
+![Docker Pulls](https://img.shields.io/docker/pulls/davideshay/dockerautolabel?style=for-the-badge)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/davideshay/dockerautolabel/BuildDockerImage?style=for-the-badge)
+![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/davideshay/dockerautolabel?style=for-the-badge)
+
 ## What it Does
 This container, intended to be run on a docker swarm cluster as a service (must be run on a manager node), automatically creates/updates node labels and keeps them in sync with where services are running. For instance, if I am running a "virtual IP" keepalived service called "clusterip", most nodes in the cluster will have a label "running_clusterip=0", but the node where the clusterip service is running will have the label set to 1 "running_clusterip=1".
 
