@@ -2,7 +2,7 @@ version: "3.7"
 services:
     dockerautolabel:
         build: .
-        image: registry.shayoh.duckdns.org:5000/dockerautolabel:3
+        image: registry.shayoh.duckdns.org:5000/dockerautolabel:8
         volumes:
            - /data/gdata/docker/config/dockerautolabel:/config
            - /var/run/docker.sock:/var/run/docker.sock  

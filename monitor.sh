@@ -1,21 +1,26 @@
-#!/bin/bash
-SRVFILE=/config/servicelist.txt
-SRVALLJSOUT=/tmp/servalljs.$$.out
-SRVIDFILE=/tmp/servids.$$.out
-TASKJSOUT=/tmp/tasksjs.$$.out
-TASKSTATEALL=/tmp/taskstateall.$$.out
-TASKSTATERUN=/tmp/taskstaterun.$$.out
-NODEOUT=/tmp/nodejs.$$.out
-CURNODELABELOUT=/tmp/curnodelabel.$$.out
-CURNODELABELTMP=/tmp/curnodelabeltmp.$$.out
-TGTNODELABELTMP=/tmp/tgtnodelabeltmp.$$.out
-TGTNODELABELOUT=/tmp/tgtnodelabel.$$.out
-UPDNODELABELOUT=/tmp/updnodelabel.$$.out
-NODELIST=/tmp/nodelist.$$.out
-IFS=","
-MAX_SERVCHECK_RETRIES=30
-SECS_BETWEEN_RETRIES=15
-SECS_BETWEEN_BACKUP_CHECKS=30
+#!/bin/ash
+
+
+
+setvars() {
+   SRVFILE=/config/servicelist.txt
+   SRVALLJSOUT=$(mktemp /tmp/servalljs.out.XXXXXX)
+   SRVIDFILE=$(mktemp /tmp/servids.out.XXXXXX)
+   TASKJSOUT=$(mktemp /tmp/tasksjs.out.XXXXXX)
+   TASKSTATEALL=$(mktemp /tmp/taskstateall.out.XXXXXX)
+   TASKSTATERUN=$(mktemp /tmp/taskstaterun.out.XXXXXX)
+   NODEOUT=$(mktemp /tmp/nodejs.out.XXXXXX)
+   CURNODELABELOUT=$(mktemp /tmp/curnodelabel.out.XXXXXX)
+   CURNODELABELTMP=$(mktemp /tmp/curnodelabeltmp.out.XXXXXX)
+   TGTNODELABELTMP=$(mktemp /tmp/tgtnodelabeltmp.out.XXXXXX)
+   TGTNODELABELOUT=$(mktemp /tmp/tgtnodelabel.out.XXXXXX)
+   UPDNODELABELOUT=$(mktemp /tmp/updnodelabel.out.XXXXXX)
+   NODELIST=$(mktemp /tmp/nodelist.out.XXXXXX)
+   IFS=","
+   MAX_SERVCHECK_RETRIES=30
+   SECS_BETWEEN_RETRIES=15
+   SECS_BETWEEN_BACKUP_CHECKS=30
+}
 
 
 ## retrieve current set of nodes, and set of node labels/values in current environment
@@ -127,6 +132,8 @@ monitorloop () {
 }
 
 backupcheck() {
+     echo "Creating secondary filename set for backup check process..."
+     setvars     
      echo "Executing Backup Check, every 30 seconds..."
      while true; do
 	checkandupdate     
@@ -139,7 +146,8 @@ backupcheck() {
 
 ### MAIN FUNCTION
 
-
+echo "Setting initial vars"
+setvars
 echo "Getting Node List..."
 getnodesandlabels
 echo "Setting All Service Flags Off..."
